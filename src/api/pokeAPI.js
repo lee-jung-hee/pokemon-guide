@@ -26,10 +26,6 @@ async function fetchPokeAPI(id) {
 
 export default fetchPokeAPI;
 
-// 포켓몬 이름 : pokemon-species/id
-// names, language, name: 'ko'
-// flavor_text_entries.language.name
-
 // const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}/`);
 // data.names.find((el) => el.language.name === "ko").name;  // 이름
 // data.flavor_text_entries.find((el) => el.language.name === "ko").flavor_text; // 설명
