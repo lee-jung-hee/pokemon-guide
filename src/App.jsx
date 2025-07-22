@@ -1,12 +1,13 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMultiplePokemonById } from "./features/pokemon/pokemonThunk";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
-import Main from "./pages/Main";
-import Detail from "./pages/Detail";
-import Search from "./pages/Search";
-import Favorite from "./pages/Favorite";
+
+const Main = lazy(() => import("./pages/Main"));
+const Detail = lazy(() => import("./pages/Detail"));
+const Search = lazy(() => import("./pages/Search"));
+const Favorite = lazy(() => import("./pages/Favorite"));
 
 function App() {
   const loading = useSelector((state) => state.pokemon.loading);
@@ -35,12 +36,14 @@ function App() {
         />
       </nav>
       <main className="flex flex-wrap justify-center gap-6 pt-[20px]">
-        <Routes>
-          <Route path={"/"} element={<Main />} />
-          <Route path={"/detail/:id"} element={<Detail />} />
-          <Route path={"/search"} element={<Search />} />
-          <Route path={"/favorite"} element={<Favorite />} />
-        </Routes>
+        <Suspense fallback={<>loading</>}>
+          <Routes>
+            <Route path={"/"} element={<Main />} />
+            <Route path={"/detail/:id"} element={<Detail />} />
+            <Route path={"/search"} element={<Search />} />
+            <Route path={"/favorite"} element={<Favorite />} />
+          </Routes>
+        </Suspense>
       </main>
     </>
   );

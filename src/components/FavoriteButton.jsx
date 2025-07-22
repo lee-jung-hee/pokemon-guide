@@ -1,9 +1,28 @@
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from "../features/favorite/favoriteSlice";
 
-function FavoriteButton() {
+function FavoriteButton({ pokemonId }) {
+  const favoriteIds = useSelector((state) => state.favorite.ids);
+  const isFavorite = favoriteIds.includes(pokemonId);
+  const dispatch = useDispatch();
+
   return (
     <>
-      <span></span>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(
+            isFavorite
+              ? removeFromFavorite({ id: pokemonId })
+              : addToFavorite({ id: pokemonId })
+          );
+        }}
+      >
+        {isFavorite ? "❤️" : "🩶"}
+      </button>
     </>
   );
 }
