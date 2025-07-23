@@ -4,11 +4,7 @@ import { useSelector } from "react-redux";
 import { selectPokemon } from "../../../features/pokemon/pokemonSelector";
 import FavoriteButton from "../../../components/FavoriteButton";
 import FlipCard from "../../../components/FlipCard";
-import FilpCard from "../../../pokemon-list 복사본/src/components/FilpCard";
-import { useParams } from "react-router-dom";
-
 export default function DetailPage({ params }) {
-  const { id } = useParams();
   const { pokemonId } = params;
   const pokemon = useSelector(selectPokemon(Number(pokemonId)));
 
@@ -20,7 +16,7 @@ export default function DetailPage({ params }) {
     <div className="flex flex-col justify-center items-center border-1 border-gray-300 rounded-xl p-3 w-[300px]">
       <div>
         <span className="text-3xl">{pokemon.name}</span>
-        <FavoriteButton pokemonId={Number(id)} />
+        <FavoriteButton pokemonId={Number(pokemonId)} />
       </div>
       <div className="whitespace-pre-wrap text-center mt-2">
         {pokemon.description}
