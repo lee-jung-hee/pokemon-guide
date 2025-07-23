@@ -1,0 +1,35 @@
+
+'use client';
+
+import { useSelector } from "react-redux";
+import { useSearchParams } from "next/navigation";
+import { getRegExp } from "korean-regexp";
+import { selectPokemonKorReg } from "../../features/pokemon/pokemonSelector";
+import Link from 'next/link';
+import FlipCard from '../../components/FlipCard';
+
+export default function Search() {
+  const searchParams = useSearchParams();
+  const param = searchParams.get("pokemon");
+  const reg = param ? getRegExp(param) : null;
+
+  const pokemon = useSelector((state) =>
+    reg ? selectPokemonKorReg(reg)(state) : []
+  );
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {pokemon.length === 0 && param ? (
+        <p className="text-center col-span-full">검색 결과가 없습니다.</p>
+      ) : pokemon.length === 0 && !param ? (
+        <p className="text-center col-span-full">검색어를 입력해주세요.</p>
+      ) : (
+        pokemon.map((mon) => (
+          <Link key={mon.id} href={`/detail/${mon.id}`}>
+            <FlipCard pokemon={mon} />
+          </Link>
+        ))
+      )}
+    </div>
+  );
+}
