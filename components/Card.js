@@ -10,7 +10,12 @@ const Card = memo(({ pokemon }) => {
 
   return (
     <section
-      onClick={() => router.push(`/detail/${pokemon.id}`)}
+      onClick={(e) => {
+        if (e.target.dataset.favoriteButton !== undefined) {
+          return;
+        }
+        router.push(`/detail/${pokemon.id}`);
+      }}
       className="p-3 border-2 border-solid border-gray-400 rounded-xl text-center w-[150px] h-[150px] flex justify-center items-center flex-col ease-in-out hover:scale-110 duration-200 hover:drop-shadow-[0_0_5px_rgba(0,0,0,0.2)] bg-white"
     >
       {isImageLoading ? <div>Loading...</div> : null}

@@ -15,6 +15,7 @@ function FavoriteButton({ pokemonId }) {
   return (
     <>
       <button
+        data-favorite-button
         onClick={(e) => {
           e.stopPropagation();
           dispatch(
