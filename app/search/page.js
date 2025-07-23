@@ -7,8 +7,9 @@ import { getRegExp } from "korean-regexp";
 import { selectPokemonKorReg } from "../../features/pokemon/pokemonSelector";
 import Link from 'next/link';
 import Card from '../../components/Card';
+import { Suspense } from 'react';
 
-export default function Search() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const param = searchParams.get("pokemon");
   const reg = param ? getRegExp(param) : null;
@@ -29,5 +30,13 @@ export default function Search() {
         ))
       )}
     </div>
+  );
+}
+
+export default function Search() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 }
