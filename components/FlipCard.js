@@ -1,48 +1,41 @@
+"use client";
 
-'use client';
+import { useState } from "react";
+import FavoriteButton from "./FavoriteButton";
+import styled from "styled-components";
 
-import { useState } from 'react';
-import FavoriteButton from './FavoriteButton';
+const FlipImageContainer = styled.div`
+  transform-style: preserve-3d;
+  width: 200px;
+  height: 200px;
+  position: relative;
+  transform: ${(props) => (props.flipped ? "rotateY(180deg)" : "rotateY(0)")};
+  transition: 0.5s;
+`;
 
-export default function FlipCard({ pokemon }) {
-  const [isFlipped, setIsFlipped] = useState(false);
+const FrontImage = styled.img`
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+`;
+const BackImage = styled.img`
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  position: absolute;
+`;
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
-
+export default function FilpCard({ front, back }) {
+  const [flipped, setFlipped] = useState(false);
   return (
-    <div className="relative w-48 h-64 perspective-1000">
-      <div
-        className={`relative w-full h-full transition-transform duration-700 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}
-      >
-        {/* Front side */}
-        <div className="absolute w-full h-full backface-hidden bg-white border border-gray-300 rounded-lg shadow-md flex flex-col items-center justify-center p-4">
-          <img src={pokemon.front} alt={pokemon.name} className="w-32 h-32 mb-2" />
-          <h2 className="text-xl font-bold text-center">{pokemon.name}</h2>
-          <div className="absolute top-2 right-2">
-            <FavoriteButton pokemonId={pokemon.id} />
-          </div>
-        </div>
-
-        {/* Back side */}
-        <div className="absolute w-full h-full backface-hidden bg-white border border-gray-300 rounded-lg shadow-md flex flex-col items-center justify-center p-4 rotate-y-180">
-          <img src={pokemon.back} alt={pokemon.name} className="w-32 h-32 mb-2" />
-          <p className="text-sm text-center whitespace-pre-line">{pokemon.description}</p>
-          <div className="absolute top-2 right-2">
-            <FavoriteButton pokemonId={pokemon.id} />
-          </div>
-        </div>
-      </div>
-      <button
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent card click from triggering
-          handleFlip();
-        }}
-        className="mt-2 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 w-full"
-      >
-        뒤집기
-      </button>
-    </div>
+    <>
+      <FlipImageContainer flipped={flipped ? "flip" : ""}>
+        <FrontImage src={front} />
+        <BackImage src={back} />
+      </FlipImageContainer>
+      <button onClick={() => setFlipped((prev) => !prev)}>뒤집기</button>
+    </>
   );
 }

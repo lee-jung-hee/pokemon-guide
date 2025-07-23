@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { getRegExp } from "korean-regexp";
 import { selectPokemonKorReg } from "../../features/pokemon/pokemonSelector";
 import Link from 'next/link';
-import FlipCard from '../../components/FlipCard';
+import Card from '../../components/Card';
 
 export default function Search() {
   const searchParams = useSearchParams();
@@ -25,9 +25,7 @@ export default function Search() {
         <p className="text-center col-span-full">검색어를 입력해주세요.</p>
       ) : (
         pokemon.map((mon) => (
-          <Link key={mon.id} href={`/detail/${mon.id}`}>
-            <FlipCard pokemon={mon} />
-          </Link>
+          <Card key={mon.id} pokemon={mon} />
         ))
       )}
     </div>

@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { useSelector } from 'react-redux';
-import { selectPokemon } from '../../../features/pokemon/pokemonSelector';
-import FavoriteButton from '../../../components/FavoriteButton';
-import FlipCard from '../../../components/FlipCard';
-import { useRouter } from 'next/navigation';
+import { useSelector } from "react-redux";
+import { selectPokemon } from "../../../features/pokemon/pokemonSelector";
+import FavoriteButton from "../../../components/FavoriteButton";
+import FlipCard from "../../../components/FlipCard";
+import FilpCard from "../../../pokemon-list 복사본/src/components/FilpCard";
+import { useParams } from "react-router-dom";
 
 export default function DetailPage({ params }) {
-  const router = useRouter();
+  const { id } = useParams();
   const { pokemonId } = params;
   const pokemon = useSelector(selectPokemon(Number(pokemonId)));
 
@@ -16,18 +17,15 @@ export default function DetailPage({ params }) {
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl font-bold mb-4">{pokemon.name}</h1>
-      <div className="flex space-x-4 mb-4">
-        <FlipCard pokemon={pokemon} />
+    <div className="flex flex-col justify-center items-center border-1 border-gray-300 rounded-xl p-3 w-[300px]">
+      <div>
+        <span className="text-3xl">{pokemon.name}</span>
+        <FavoriteButton pokemonId={Number(id)} />
       </div>
-      <p className="text-lg text-center whitespace-pre-line">{pokemon.description}</p>
-      <button
-        onClick={() => router.back()}
-        className="mt-8 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        뒤로 가기
-      </button>
+      <div className="whitespace-pre-wrap text-center mt-2">
+        {pokemon.description}
+      </div>
+      <FilpCard front={pokemon.front} back={pokemon.back} />
     </div>
   );
 }

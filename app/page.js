@@ -1,11 +1,11 @@
+"use client";
 
-'use client';
-
-import { useEffect } from 'react';
-import Link from 'next/link';
-import FlipCard from '../components/FlipCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMultiplePokemonById } from '../features/pokemon/pokemonThunk';
+import { useEffect } from "react";
+import Link from "next/link";
+import FlipCard from "../components/FlipCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMultiplePokemonById } from "../features/pokemon/pokemonThunk";
+import Card from "../components/Card";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -14,8 +14,10 @@ export default function Home() {
   const error = useSelector((state) => state.pokemon.error);
 
   useEffect(() => {
-    dispatch(fetchMultiplePokemonById());
-  }, [dispatch]);
+    if (pokemonList.length === 0) {
+      dispatch(fetchMultiplePokemonById());
+    }
+  }, [dispatch, pokemonList.length]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -27,9 +29,9 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {pokemonList.map((pokemon) => (
-        <Link key={pokemon.id} href={`/detail/${pokemon.id}`}>
-          <FlipCard pokemon={pokemon} />
+      {pokemonList.map((mon) => (
+        <Link key={mon.id} href={`/detail/${mon.id}`}>
+          <Card pokemon={mon} />
         </Link>
       ))}
     </div>
