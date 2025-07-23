@@ -21,7 +21,7 @@ export default function DetailPage({ params }) {
       <div className="whitespace-pre-wrap text-center mt-2">
         {pokemon.description}
       </div>
-      <FilpCard front={pokemon.front} back={pokemon.back} />
+      <FlipCard front={pokemon.front} back={pokemon.back} />
     </div>
   );
 }

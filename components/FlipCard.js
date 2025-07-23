@@ -27,7 +27,7 @@ const BackImage = styled.img`
   position: absolute;
 `;
 
-export default function FilpCard({ front, back }) {
+export default function FlipCard({ front, back }) {
   const [flipped, setFlipped] = useState(false);
   return (
     <>
