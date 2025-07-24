@@ -30,9 +30,7 @@ export default function Home() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {pokemonList.map((mon) => (
-        <Link key={mon.id} href={`/detail/${mon.id}`}>
-          <Card pokemon={mon} />
-        </Link>
+        <Card key={mon.id} pokemon={mon} />
       ))}
     </div>
   );
